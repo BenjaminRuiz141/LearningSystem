@@ -3,9 +3,6 @@ target/
 .github/
 .idea/
 .vscode/
-.mvn/
-mvnw
-mvnw.cmd
 .env
 .env.*
 Wallet_*/

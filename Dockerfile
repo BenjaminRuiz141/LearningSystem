@@ -1,11 +1,13 @@
-FROM maven:3.9.11-eclipse-temurin-23 AS build
+FROM eclipse-temurin:23-jdk AS build
 
 WORKDIR /workspace
 
+COPY .mvn .mvn
+COPY mvnw mvnw
 COPY pom.xml .
 COPY src ./src
 
-RUN mvn -DskipTests package
+RUN chmod +x mvnw && ./mvnw -DskipTests package
 
 FROM eclipse-temurin:23-jre
 
