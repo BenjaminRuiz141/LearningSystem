@@ -12,7 +12,7 @@ import com.duoc.LearningSystem.repository.CursoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-//
+// Componente que se ejecuta al iniciar la aplicación para cargar datos de ejemplo en la base de datos
 
 @Slf4j
 @Component

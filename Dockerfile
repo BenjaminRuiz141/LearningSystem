@@ -1,4 +1,4 @@
-FROM eclipse-temurin:23-jdk AS build
+FROM eclipse-temurin:21-jdk-alpine AS build
 
 WORKDIR /workspace
 
@@ -9,7 +9,7 @@ COPY src ./src
 
 RUN chmod +x mvnw && ./mvnw -DskipTests package
 
-FROM eclipse-temurin:23-jre
+FROM gcr.io/distroless/java21-debian12
 
 WORKDIR /app
 
