@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6.0.3
 
       - name: Read project version
         run: |
@@ -23,7 +23,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Log in to DockerHub
-        uses: docker/login-action@v2
+        uses: docker/login-action@v4.2.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -38,7 +38,7 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/learningsystem:latest
 
       - name: Set up AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v6.2.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -57,5 +57,5 @@ jobs:
             echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/learningsystem:${{ env.VERSION }}
             docker stop learningsystem || true && docker rm learningsystem || true
-            docker run -d --name learningsystem -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/learningsystem:${{ env.VERSION }}
+            docker run -d --name learningsystem -p 8080:8080 --env-file /home/ec2-user/.env ${{ secrets.DOCKERHUB_USERNAME }}/learningsystem:${{ env.VERSION }}
           EOF
